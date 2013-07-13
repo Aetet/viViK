@@ -1,0 +1,20 @@
+{
+  "name": "viViK",
+  "version": "0.0.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone.marionette": "~1.0.3",
+    "jquery": "~1.9.1",
+    "rivets": "~0.5.11",
+    "backbone": "~1.0.0",
+    "underscore": "~1.4.4",
+    "mousetrap": "~1.4.4"
+  }
+}
