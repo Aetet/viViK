@@ -29,7 +29,10 @@ module.exports = function(grunt) {
               excludeJade: true,
               compileDebug: true
           },
-          name: '<%= srcDir %>/<%= jsDir %>/app/main',
+
+          baseUrl: '<%= srcDir %>/<%= jsDir %>/app',
+          mainConfigFile: '<%= srcDir %>/<%= jsDir %>/app/require.config.js',
+          name: 'main',
           optimize: 'uglify2',
           out: '<%= buildDir %>/<%= jsDir %>/core<%= version %><%= pkg.name %>.js',
           sourceMapIn: '<%= buildDir %>/<%= jsDir %>/core<%= version %><%= pkg.name %>.map',

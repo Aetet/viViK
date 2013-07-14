@@ -1,10 +1,9 @@
 define([
-    'jade',
     'underscore',
     'backbone',
     'Backbone.Marionette'
 
-], function (jade, _, Backbone, Marionette) {
+], function (_, Backbone, Marionette) {
     'use strict';
 
     var app = new Marionette.Application();
