@@ -1,0 +1,138 @@
+.bBBAdmin {
+    background: rgb(239,245,249);
+    padding-bottom: 150px; 
+
+    &__mType_dashy {
+        background: white;
+        padding-right: 30px;
+        padding-bottom: 30px;
+    }
+    
+    &__eHeader {
+        margin: 0 0 20px 0;
+        border: 0;
+        padding: 35px 30px 0 100px;
+        position: relative;
+
+        &Calendar {
+            width: 130px;
+            position: absolute;
+            right: 0px;
+            bottom: 18px;
+            &Input {
+                border: 2px solid #81898f;
+                margin: 0;
+                padding: 0 6px;
+                font-family: "Arial",sans-serif;
+                color: #81898f;
+                height: 30px;
+                font-size: 14px;
+                box-sizing: border-box;
+                padding-right: 30px;
+                outline: 0;
+                width: 130px;
+                &:focus {
+                }
+            }
+        }
+
+        &Text {
+            font-size: 40px;
+            font-weight: normal;
+            margin: 0 0 28px 0;
+            line-height: 38px;
+        }
+
+        &__mMode_{
+            &with-icon {
+                background-position: 30px 36px;
+                background-repeat: no-repeat;
+                min-height: 42px;
+            }
+        }
+
+        &Link {
+            width: 40px;
+            height: 40px;
+            background-image: url('../img/icon_new_action.png');
+            border: 0;
+            margin: 0;
+            padding: 0;
+            cursor: pointer;
+            position: absolute;
+            top: 36px;
+            left: 30px;
+        }
+
+        &Switches {
+            display: inline-block;
+            margin-left: 120px;
+        }
+        &Switch {
+            display: inline-block;
+            margin-right: 30px;
+            font-size: 18px;
+            //border-width: 0 0 2px 0;
+            //border-style: solid;
+            line-height: 24px;
+            cursor: pointer;
+            vertical-align: middle;
+
+            &__mState_active {
+                color: white;
+                border: 0;
+                cursor: default;
+                padding: 0 5px;
+            }
+        }
+    }
+
+    &__eLabel {
+        color: rgb(165,165,165);
+        font-size: 11px;
+        line-height: 14px;
+        margin: 4px 0;
+
+        &__mDisplay {
+            &_block {
+                display: block;    
+            }
+        }
+    }
+
+    &__eInput {
+        &Text {
+            border: 2px solid rgb(129,137,143);
+            margin: 0;
+            padding: 0 12px;
+            color: black;
+            height: 42px;
+            font-size: 24px;
+            box-sizing: border-box;
+            width: 100%;
+            outline: none;
+            &:focus {
+            }
+        }
+    }
+
+    &__eFooter {
+        margin: 0;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+
+        &Content {
+            text-align: right;
+            max-width: 1160px;
+            min-width: 960px;
+            padding: 16px 40px 16px 0;
+            margin: 0 auto;
+        }
+    }
+
+    &__eSubmit {
+    }
+}
