@@ -43,9 +43,9 @@ module.exports = function(grunt) {
       },
       'css.dev': {
           options: {
-              cssIn: '<%= buildDir %>/<%= assetsDir %>/<%= cssDir %>/build/styles.<%= version %>.css',
+              cssIn: '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/build/styles.<%= version %>.css',
               optimizeCss: 'standard.keepLines.keepComments',
-              out: '<%= buildDir %>/<%= assetsDir %>/<%= cssDir %>/styles.<%= version %>.dev.css'
+              out: '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/styles.<%= version %>.dev.css'
           }
       }
 
@@ -57,7 +57,7 @@ module.exports = function(grunt) {
           paths: ["<%= srcDir %>/<%= assetDir %>/<%= less %>"]
         },
         files: {
-          "<%= buildDir %>/<%= assetsDir %>/<%= cssDir %>/build/styles.<%= version %>.css": "<%= srcDir %>/<%= assetDir %>/<%= lessDir %>/**/*.less"
+          "<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/build/styles.<%= version %>.css": "<%= srcDir %>/<%= assetDir %>/<%= lessDir %>/**/*.less"
         }
       },
       prod: {
@@ -78,7 +78,7 @@ module.exports = function(grunt) {
             },
             src: [
                 '<%= buildDir %>/<%= bowerDir %>',
-                '<%= buildDir %>/<%= assetsDir %>/img'
+                '<%= buildDir %>/<%= assetDir %>/img'
             ]
         },
         scripts: {
@@ -87,7 +87,7 @@ module.exports = function(grunt) {
             },
             src: [
                 '<%= buildDir %>/<%= jsDir %>',
-                '<%= buildDir %>/<%= assetsDir %>/<%= cssDir %>',
+                '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>',
                 '<%= buildDir %>/index.html'
             ]
         },
@@ -96,7 +96,7 @@ module.exports = function(grunt) {
             force: true
           },
           src: [
-            '<%= buildDir %>/<%= assetsDir %>/<%= cssDir %>/build'
+            '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/build'
           ]
         }
 
@@ -129,7 +129,7 @@ module.exports = function(grunt) {
         files: [
           {
             expand: true,
-            cwd: '<%= assetsDir %>',
+            cwd: '<%=srcDir%>/<%= assetDir %>',
             src: 'img/**',
             dest: '<%= buildDir %>'
           }
@@ -170,7 +170,7 @@ module.exports = function(grunt) {
     },
     watch: {
         dev: {
-            files: ['Gruntfile.js', '<%= srcDir %>/**/*.js', '<%= srcDir %>/**/*.jade', '<%= srcDir %>/<%= assetsDir %>/less/*.less'],
+            files: ['Gruntfile.js', '<%= srcDir %>/**/*.js', '<%= srcDir %>/**/*.jade', '<%= srcDir %>/<%= assetDir %>/less/*.less'],
             tasks: ['clean:scripts', 'styles:dev', 'requirejs:dev']
         }
     },
