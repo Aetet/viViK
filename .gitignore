@@ -1,2 +1,7 @@
+**/.gitignore
 node_modules
 bower_components
+**/*.swp
+.idea
+**/*~
+*.log
