@@ -1,0 +1,8 @@
+{
+<<<<<<< HEAD
+  "directory": "src/js/vendor",
+=======
+  "directory": "js/bower_components",
+>>>>>>> c8e4963af7d8918e17219febe051692525bc91a3
+  "json": "bower.json"
+}

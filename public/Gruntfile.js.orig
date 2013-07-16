@@ -10,16 +10,25 @@ module.exports = function(grunt) {
     less:       'less',
     cssDir:     'css',
     jsDir:      'js',
+<<<<<<< HEAD
     buildDir:   'build',
     testDir:    'test',
     srcDir:     'src',
     bowerDir:   '<%= jsDir %>/vendor',
+=======
+    bowerDir:   '<%= jsDir %>/bower_components',
+    buildDir:   'build',
+    testDir:    'test',
+    srcDir:     'src',
+>>>>>>> c8e4963af7d8918e17219febe051692525bc91a3
     version: '<%= grunt.template.today("yyyymmddhhMM") %>',
     banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
       '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
       '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
       '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
       ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
+<<<<<<< HEAD
+    
     // Task configuration.
     requirejs: {
       dev: {
@@ -52,14 +61,38 @@ module.exports = function(grunt) {
 
     less: {
       dev: {
+=======
+    // Task configuration.
+    requirejs: {
+      compile: {
+        options: {
+          pragmasOnSave: {
+              excludeJade: true
+          },
+          baseUrl: "path/to/base",
+          mainConfigFile: "path/to/config.js",
+          out: "path/to/optimized.js"
+        }
+      }
+    },
+    less: {
+      development: {
+>>>>>>> c8e4963af7d8918e17219febe051692525bc91a3
         options: {
           paths: ["<%= srcDir %>/<%= assetDir %>/<%= less %>"]
         },
         files: {
+<<<<<<< HEAD
           "<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/build/styles.<%= version %>.css": "<%= srcDir %>/<%= assetDir %>/<%= lessDir %>/**/*.less"
         }
       },
       prod: {
+=======
+          "<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/**/*.css": "<%= srcDir %>/<%= assetDir %>/<%= lessDir %>/**/*.less"
+        }
+      },
+      production: {
+>>>>>>> c8e4963af7d8918e17219febe051692525bc91a3
         options: {
           paths: ["<%= srcDir %>/<%= assetDir %>/<%= less %>"],
           yuicompress: true
@@ -69,7 +102,8 @@ module.exports = function(grunt) {
         }
       }
     },
-
+<<<<<<< HEAD
+   
     clean: {
         resources: {
             options: {
@@ -114,6 +148,18 @@ module.exports = function(grunt) {
       }
     },
 
+=======
+    concat: {
+      options: {
+        banner: '<%= banner %>',
+        stripBanners: true
+      },
+      build: {
+        src: ['<%= srcDir %>/<%= jsDir %>/**/*'],
+        dest: '<%= buildDir %>/<%= jsDir %>/<%= version %><%= pkg.name %>.js'
+      }
+    },
+>>>>>>> c8e4963af7d8918e17219febe051692525bc91a3
     uglify: {
       options: {
         banner: '<%= banner %>'
@@ -123,6 +169,7 @@ module.exports = function(grunt) {
         dest: '<%= buildDir %>/<%= jsDir %>/<%= version %><%= pkg.name %>.js'
       }
     },
+<<<<<<< HEAD
     copy: {
       resources: {
         files: [
@@ -147,6 +194,8 @@ module.exports = function(grunt) {
       }
     },
     
+=======
+>>>>>>> c8e4963af7d8918e17219febe051692525bc91a3
     jshint: {
       options: {
         curly: true,
@@ -168,6 +217,7 @@ module.exports = function(grunt) {
       }
     },
     watch: {
+<<<<<<< HEAD
         dev: {
             files: ['Gruntfile.js', '<%= srcDir %>/**/*.js', '<%= srcDir %>/**/*.jade', '<%= srcDir %>/<%= assetDir %>/less/*.less'],
             tasks: ['clean:scripts', 'styles:dev', 'requirejs:dev']
@@ -177,6 +227,16 @@ module.exports = function(grunt) {
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
+=======
+      gruntfile: {
+        files: '<%= jshint.gruntfile.src %>',
+        tasks: ['jshint:gruntfile']
+      }
+    }
+  });
+
+  // These plugins provide necessary tasks.
+>>>>>>> c8e4963af7d8918e17219febe051692525bc91a3
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -185,9 +245,14 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-requirejs');
 
   // Default task.
-  grunt.registerTask('styles:dev', ['copy:resources', 'less:dev', 'concat:dev', 'requirejs:css.dev', 'clean:temp']);
-  grunt.registerTask('dev', ['clean', 'styles:dev', 'requirejs:dev']);
-  grunt.registerTask('watcher:dev', ['dev', 'watch:dev']);
+<<<<<<< HEAD
+    grunt.registerTask('styles:dev', ['copy:resources', 'less:dev', 'concat:dev', 'requirejs:css.dev', 'clean:temp']);
+    grunt.registerTask('dev', ['clean', 'styles:dev', 'requirejs:dev']);
+    grunt.registerTask('watcher:dev', ['dev', 'watch:dev']);
   grunt.registerTask('default', ['watcher:dev']);
+=======
+
+  grunt.registerTask('default', ['jshint', 'concat' ]);
+>>>>>>> c8e4963af7d8918e17219febe051692525bc91a3
 
 };
