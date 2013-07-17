@@ -7,7 +7,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     publicDir:  '.',
     assetDir:   'assets',
-    less:       'less',
+    lessDir:       'less',
     cssDir:     'css',
     jsDir:      'js',
     buildDir:   'build',
@@ -25,10 +25,9 @@ module.exports = function(grunt) {
       dev: {
         options: {
           pragmasOnSave: {
-              excludeJade: true,
-              compileDebug: true
+            excludeJade: true,
+            compileDebug: true
           },
-
           baseUrl: '<%= srcDir %>/<%= jsDir %>/app',
           mainConfigFile: '<%= srcDir %>/<%= jsDir %>/app/require.config.js',
           name: 'main',
@@ -41,63 +40,62 @@ module.exports = function(grunt) {
         }
       },
       'css.dev': {
-          options: {
-              cssIn: '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/build/styles.<%= version %>.css',
-              optimizeCss: 'standard.keepLines.keepComments',
-              out: '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/styles.<%= version %>.dev.css'
-          }
+        options: {
+          cssIn: '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/build/styles.<%= version %>.css',
+          optimizeCss: 'standard.keepLines.keepComments',
+          out: '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/styles.<%= version %>.dev.css'
+        }
       }
-
     },
 
     less: {
       dev: {
         options: {
-          paths: ["<%= srcDir %>/<%= assetDir %>/<%= less %>"]
+          paths: ['<%= srcDir %>/<%= assetDir %>/<%= lessDir %>']
         },
         files: {
-          "<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/build/styles.<%= version %>.css": "<%= srcDir %>/<%= assetDir %>/<%= lessDir %>/**/*.less"
+          '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/build/styles.<%= version %>.css': '<%= srcDir %>/<%= assetDir %>/<%= lessDir %>/**/*.less'
         }
       },
       prod: {
         options: {
-          paths: ["<%= srcDir %>/<%= assetDir %>/<%= less %>"],
+          paths: ['<%= srcDir %>/<%= assetDir %>/<%= lessDir %>'],
           yuicompress: true
         },
         files: {
-          "<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/**/*.css": "<%= srcDir %>/<%= assetDir %>/<%= lessDir %>/**/*.less"
+          '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/**/*.css': '<%= srcDir %>/<%= assetDir %>/<%= lessDir %>/**/*.less'
         }
       }
     },
 
     clean: {
-        resources: {
-            options: {
-                force: true
-            },
-            src: [
-                '<%= buildDir %>/<%= bowerDir %>',
-                '<%= buildDir %>/<%= assetDir %>/img'
-            ]
+      resources: {
+        options: {
+          force: true
         },
-        scripts: {
-            options: {
-                force: true
-            },
-            src: [
-                '<%= buildDir %>/<%= jsDir %>',
-                '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>',
-                '<%= buildDir %>/index.html'
-            ]
+        src: [
+          '<%= buildDir %>/<%= bowerDir %>',
+          '<%= buildDir %>/<%= assetDir %>/img'
+        ]
+      },
+      scripts: {
+        options: {
+          force: true
         },
-        temp: {
-          options: {
-            force: true
-          },
-          src: [
-            '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/build'
-          ]
-        }
+        src: [
+          '<%= buildDir %>/<%= jsDir %>',
+          '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>',
+          '<%= buildDir %>/index.html'
+        ]
+      },
+      temp: {
+        options: {
+          force: true
+        },
+        src: [
+          '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/build'
+        ]
+      }
 
     },
 
@@ -125,42 +123,44 @@ module.exports = function(grunt) {
     },
     copy: {
       resources: {
-        files: [
-          {
-            expand: true,
-            cwd: '<%=srcDir%>/<%= assetDir %>',
-            src: 'img/**',
-            dest: '<%= buildDir %>'
-          }
-        ]
+        files: [{
+          expand: true,
+          cwd: '<%=srcDir%>/<%= assetDir %>',
+          src: 'img/**',
+          dest: '<%= buildDir %>'
+        }]
       },
 
       scripts: {
-        files: [
-          {
-            expand: true,
-            cwd: '<%= srcDir %>',
-            src: ['js/**/*'],
-            dest: '<%= buildDir  %>'
-          }
-        ]
+        files: [{
+          expand: true,
+          cwd: '<%= srcDir %>',
+          src: ['js/**/*'],
+          dest: '<%= buildDir  %>'
+        }]
       }
     },
     
     jshint: {
       options: {
+        camelcase: true,
         curly: true,
         eqeqeq: true,
         immed: true,
+        indent: 2,
         latedef: true,
         newcap: true,
         noarg: true,
+        nonew: true,
+        quotmark: true,
         sub: true,
         undef: true,
         unused: true,
+        maxparams: 4,
         boss: true,
         eqnull: true,
         browser: true,
+        laxcomma: true,
         globals: {}
       },
       gruntfile: {
@@ -168,10 +168,10 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-        dev: {
-            files: ['Gruntfile.js', '<%= srcDir %>/**/*.js', '<%= srcDir %>/**/*.jade', '<%= srcDir %>/<%= assetDir %>/less/*.less'],
-            tasks: ['clean:scripts', 'styles:dev', 'requirejs:dev']
-        }
+      dev: {
+        files: ['Gruntfile.js', '<%= srcDir %>/**/*.js', '<%= srcDir %>/**/*.jade', '<%= srcDir %>/<%= assetDir %>/<%= lessDir %>/*.less'],
+        tasks: ['clean:scripts', 'styles:dev', 'requirejs:dev']
+      }
     },
   });
   // These plugins provide necessary tasks.
