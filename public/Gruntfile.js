@@ -7,7 +7,8 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     publicDir:  '.',
     assetDir:   'assets',
-    lessDir:       'less',
+    appDir:     'app',
+    lessDir:    'less',
     cssDir:     'css',
     jsDir:      'js',
     buildDir:   'build',
@@ -140,8 +141,22 @@ module.exports = function(grunt) {
         }]
       }
     },
+
+    preprocess: {
+      dev: {
+        files: {
+          '<%= buildDir %>/index.html': '<%= srcDir %>/index.html'
+        },
+        options: {
+          context: {
+            VERSION: '<%= version %>',
+          }
+        }
+      }
+    },
     
     jshint: {
+      all: ['<%= srcDir %>/<%= jsDir %>/<%= appDir %>/**/*.js'],
       options: {
         camelcase: true,
         curly: true,
@@ -154,17 +169,24 @@ module.exports = function(grunt) {
         nonew: true,
         quotmark: true,
         sub: true,
-        undef: true,
-        unused: true,
         maxparams: 4,
         boss: true,
         eqnull: true,
         browser: true,
-        laxcomma: true,
-        globals: {}
+        laxcomma: true
       },
       gruntfile: {
         src: 'Gruntfile.js'
+      }
+    },
+
+    notify: {
+      build: {
+        options: {
+          title: 'Grunt: <%= pkg.name %>.<%= version %>',  // optional
+          message: 'Build complete', //required
+          subtitle: '' // optional, kinda a lot for a message
+        }
       }
     },
     watch: {
@@ -183,10 +205,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
+  grunt.loadNpmTasks('grunt-preprocess');
+  grunt.loadNpmTasks('grunt-notify');
 
   // Default task.
-  grunt.registerTask('styles:dev', ['copy:resources', 'less:dev', 'concat:dev', 'requirejs:css.dev', 'clean:temp']);
-  grunt.registerTask('dev', ['clean', 'styles:dev', 'requirejs:dev']);
+  grunt.registerTask('styles:dev', ['copy:resources', 'less:dev', 'concat:dev', 'preprocess:dev', 'requirejs:css.dev', 'clean:temp']);
+  grunt.registerTask('dev', ['clean', 'styles:dev', 'requirejs:dev', 'notify:build']);
   grunt.registerTask('watcher:dev', ['dev', 'watch:dev']);
   grunt.registerTask('default', ['watcher:dev']);
 

@@ -1,22 +1,23 @@
 define([
-    'underscore',
-    'backbone',
-    'Backbone.Marionette'
+  'underscore',
+  'backbone',
+  'Backbone.Marionette'
 
 ], function (_, Backbone, Marionette) {
-    'use strict';
+  'use strict';
 
-    var app = new Marionette.Application();
+  var app = new Marionette.Application();
 
-    app.addInitializer(function (options) {
-        Marionette.TemplateCache.prototype.loadTemplate = function (templateId) {
-            return templateId;
-        };
+  app.addInitializer(function (options) {
+    Marionette.TemplateCache.prototype.loadTemplate = function (templateId) {
+      return templateId;
+    };
 
-        Marionette.TemplateCache.prototype.compileTemplate = function (rawTemplate) {
-            return rawTemplate;
-        };
-    });
+    Marionette.TemplateCache.prototype.compileTemplate = function (rawTemplate) {
+      return rawTemplate;
+    };
+  });
 
-    return app;
+
+  return app;
 });

@@ -1,7 +1,15 @@
 require([
-    'app',
+  'app',
 ], function (app) {
-    'use strict';
-    app.start(options);
+  'use strict';
+
+  var options = {
+    history: {
+      pushState: true,
+      root: '/dashboard'
+    },
+    debug: true
+  };
+  app.start(options);
 
 });
