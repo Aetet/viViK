@@ -86,7 +86,7 @@ module.exports = function(grunt) {
         src: [
           '<%= buildDir %>/<%= jsDir %>',
           '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>',
-          '<%= buildDir %>/index.html'
+          'index.html'
         ]
       },
       temp: {
@@ -145,7 +145,7 @@ module.exports = function(grunt) {
     preprocess: {
       dev: {
         files: {
-          '<%= buildDir %>/index.html': '<%= srcDir %>/index.html'
+          'index.html': '<%= srcDir %>/index.html'
         },
         options: {
           context: {

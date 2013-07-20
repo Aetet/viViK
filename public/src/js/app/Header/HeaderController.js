@@ -1,28 +1,16 @@
-/**
- *
- * Created with IntelliJ IDEA.
- * User: aetetic
- * Date: 18.07.13
- * Time: 22:48
- * To change this template use File | Settings | File Templates.
- */
-
 define([
   'app',
-  'Backbone.Marionette',
+  'backbone',
+  'Backbone.Marionette'
 
-  'jade!./HeaderTemplate'
 ], function (
   app,
   Backbone,
-  Marionette,
-  HeaderTemplate
+  Marionette
 ) {
   'use strict';
 
   var HeaderView =  Marionette.ItemView.extend({
-    template: HeaderTemplate
-
   });
 
   var HeaderController = Marionette.Controller.extend({
@@ -32,7 +20,7 @@ define([
 
     show: function () {
       var headerView = new HeaderView();
-      this.region.show(headerView);
+//      this.region.show(headerView);
     }
 
   });

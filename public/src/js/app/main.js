@@ -1,15 +1,17 @@
 require([
   'app',
-], function (app) {
+  'Main/MainController'
+], function (app, MainController) {
   'use strict';
+  console.log('historical time');
+  app.addRegions({
+    mainRegion: '.jsMainRegion'
+  });
 
-  var options = {
-    history: {
-      pushState: true,
-      root: '/dashboard'
-    },
-    debug: true
-  };
-  app.start(options);
+  app.on('initialize:after', function () {
+    var mainController = new MainController({region: app.mainRegion});
+    mainController.show();
+  });
+  app.start();
 
 });

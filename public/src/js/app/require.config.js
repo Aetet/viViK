@@ -1,4 +1,5 @@
 // Set the require.js configuration for your application.
+console.log('I was required');
 requirejs.config({
   paths: {
     'requireLib': '../vendor/requirejs/require',

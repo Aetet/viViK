@@ -1,11 +1,3 @@
-/**
- * Created with IntelliJ IDEA.
- * User: aetetic
- * Date: 18.07.13
- * Time: 21:49
- * To change this template use File | Settings | File Templates.
- */
-
 define([
   'app',
   'Backbone.Marionette',
@@ -15,9 +7,10 @@ define([
   'jade!./MainTemplate'
 ], function (
   app,
-  Backbone,
   Marionette,
+
   HeaderController,
+
   MainTemplate
 ) {
   'use strict';
@@ -32,6 +25,7 @@ define([
 
   var MainController = Marionette.Controller.extend({
     initialize: function (options) {
+      console.log('init Main Controller', options.region);
       this.region = options.region;
     },
 
@@ -39,36 +33,22 @@ define([
       var self = this;
       var layout = new MainLayout();
 
-      self.listenTo(MainLayout, {
+      self.listenTo(layout, {
         'render': function () { self._showWidgets(layout); }
       });
 
-      return MainLayout;
+      return layout ;
     },
 
-    start: function () {
+    show: function () {
+      console.log('show must go on', this.region);
       this.region.show(this._getLayout());
     },
 
     _showWidgets: function (layout) {
-      var headerController = new HeaderController({region: layout.header});
-      headerController.show();
+//      var headerController = new HeaderController({region: layout.header});
+//      headerController.show();
     }
   });
-
-  app.addInitializer(function () {
-    var Router = Marionette.AppRouter.extend({
-      appRoutes: {
-        'manager_dashboard': 'start'
-      }
-    });
-
-    var controller = new MainController({
-      region: app.mainRegion
-    });
-
-    new Router({
-      controller: controller
-    });
-  });
+  return MainController;
 });

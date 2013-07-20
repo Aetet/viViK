@@ -22,5 +22,8 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Aetet/viViK/issues"
+  },
+  "devDependencies": {
+    "node-static": "~0.7.0"
   }
 }
