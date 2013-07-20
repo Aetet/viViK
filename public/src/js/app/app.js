@@ -6,9 +6,9 @@ define([
 ], function (_, Backbone, Marionette) {
   'use strict';
 
-  var app = new Marionette.Application();
+     var app = new Marionette.Application();
 
-  app.addInitializer(function (options) {
+  app.addInitializer(function () {
     Marionette.TemplateCache.prototype.loadTemplate = function (templateId) {
       return templateId;
     };

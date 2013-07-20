@@ -10,7 +10,6 @@
   "nonew": true,
   "quotmark": true,
   "sub": true,
-  "undef": true,
   "unused": true,
   "maxparams": 4,
   "boss": true,
