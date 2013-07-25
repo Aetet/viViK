@@ -1,15 +1,16 @@
 define([
   'app',
   'Backbone.Marionette',
-
   'Header/HeaderController',
+  'Navigation/NavigationController',
 
-  'jade!./MainTemplate'
+  'jade!../../../Templates/Main/MainTemplate'
 ], function (
   app,
   Marionette,
 
   HeaderController,
+  NavigationController,
 
   MainTemplate
 ) {
@@ -19,7 +20,8 @@ define([
     template: MainTemplate,
 
     regions: {
-      header: '.jsHeaderRegion'
+      header: '.jsHeaderRegion',
+      navigation: '.jsNavigationRegion'
     }
   });
 
@@ -46,6 +48,9 @@ define([
     },
 
     _showWidgets: function (layout) {
+      var navigationController = 
+        new NavigationController({region: layout.navigation});
+      navigationController.show();
 //      var headerController = new HeaderController({region: layout.header});
 //      headerController.show();
     }
