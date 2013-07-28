@@ -9,7 +9,9 @@ function isNumber(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
-exports.getWall = function (req, res) {
+vkMethods = {};
+
+vkMethods.getWall = function (req, res) {
 
   //predefined params, more info http://vk.com/dev/wall.get
   var params = {
@@ -17,7 +19,7 @@ exports.getWall = function (req, res) {
     count: 10,
     filter: 'all',
     extended: 1
-  }
+  };
 
   var urlParsed = url.parse(req.url, true);
   var uid = urlParsed.query.uid;
@@ -30,11 +32,13 @@ exports.getWall = function (req, res) {
     var vk = new VK();
     vk.request(GET_WALL, params);
 
-    vk.on(GET_WALL, function(result){
+    vk.on(GET_WALL, function (result) {
       console.log(result);
-      res.end("result: \n"+ result + "\n see console\\debug for full info");
-    })
+      res.end("result: \n" + result + "\n see console\\debug for full info");
+    });
   } else {
     res.end("enter uid in query string");
   }
 };
+
+module.exports = vkMethods;

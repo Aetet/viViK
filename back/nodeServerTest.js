@@ -7,7 +7,7 @@ http.createServer(function (req, res) {
   var urlParsed = url.parse(req.url, true);
   switch (urlParsed.pathname) {
     case '/vk':
-      vkMethods.getWall(req, res);
+      vkMethods['getWall'](req, res);
       break;
     default :
       res.statusCode = 404;
