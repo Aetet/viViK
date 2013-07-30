@@ -7,7 +7,7 @@ define([
 
   'Models/CurrentElementModel',
 
-  'jade!../../../Templates/Main/MainTemplate'
+  'jade!Content/../../../Templates/Main/MainTemplate'
 ], function (
   app,
   Marionette,

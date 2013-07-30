@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Профиль",
+    "activeElement": true
+  },
+  {
+    "name": "Стена",
+    "activeElement": false
+  },
+  {
+    "name": "Аудио",
+    "activeElement": false
+  }
+]

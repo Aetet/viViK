@@ -1,11 +1,11 @@
 define([
   'underscore',
   'Backbone.Marionette',
-  'mousetrap'
+  'Mousetrap'
 ], function (
   _, 
   Marionette,
-  mousetrap
+  Mousetrap
 ) {
   var KeyMap = {
     Navigation: {
@@ -30,7 +30,7 @@ define([
       var self = this;
 
       console.log('keymap for next', KeyMap.Navigation.nextElement);
-      mousetrap.bind(KeyMap.Navigation.nextElement, function () {
+      Mousetrap.bind(KeyMap.Navigation.nextElement, function () {
         console.log('its a next Elem?');
         navigationView.trigger('nextElement');
       });

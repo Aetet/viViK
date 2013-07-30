@@ -11,8 +11,9 @@ define([
     }
   });
   var NavigationItemCollection = 
-    Backbone.Collection.extend(NavigationContentJSON, {
-      model: NavigationItemModel
+    Backbone.Collection.extend({
+      model: NavigationItemModel,
+      url: '/build/Locales/Navigation/NavigationContentJSON.json'
     });
 
   return NavigationItemCollection;

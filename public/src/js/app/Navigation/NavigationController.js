@@ -2,18 +2,16 @@ define([
   'app',
   'Backbone.Marionette',
 
-  'mousetrap',
   'KeyCatcher',
 
   'Models/CurrentElementModel',
   'Navigation/Models/NavigationItemCollection',
 
-  'jade!Content/../../Templates/Navigation/NavigationTemplate'
+  'jade!Content/../../../Templates/Navigation/NavigationTemplate'
 ], function (
   app,
   Marionette,
 
-  mousetrap,
   KeyCatcher,
 
   CurrentElementModel,
@@ -36,7 +34,6 @@ define([
       });
     },
     _nextElementHandler: function () {
-      console.log('Is this a right way?');
       var currentElementModel
         , currentEl
         , tempNextElement;
@@ -56,8 +53,16 @@ define([
 
   var NavigationController = Marionette.Controller.extend({
     initialize: function (options) {
-      var navigationItemCollection = new NavigationItemCollection();
-      console.log('navigationItem', navigationItemCollection);
+      var navigationItemCollection
+        , menuArray;
+      menuArray = []
+      navigationItemCollection = new NavigationItemCollection();
+
+      navigationItemCollection.fetch({
+        success: function () {
+          console.log('navigationItem', navigationItemCollection);
+        }
+      });
       this.keyCatcher = new KeyCatcher();
       this.currentElementModel = options.currentElementModel;
       this.region = options.region;

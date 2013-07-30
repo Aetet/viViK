@@ -1,9 +1,9 @@
 define([
   'underscore',
-  'backbone',
-  'Backbone.Marionette'
+  'Backbone.Marionette',
+  'util/rivets-config'
 
-], function (_, Backbone, Marionette) {
+], function (_, Marionette) {
   'use strict';
 
   var app = new Marionette.Application();
