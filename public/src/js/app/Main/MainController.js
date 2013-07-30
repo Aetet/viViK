@@ -1,8 +1,11 @@
 define([
   'app',
   'Backbone.Marionette',
+
   'Header/HeaderController',
   'Navigation/NavigationController',
+
+  'Models/CurrentElementModel',
 
   'jade!../../../Templates/Main/MainTemplate'
 ], function (
@@ -11,6 +14,8 @@ define([
 
   HeaderController,
   NavigationController,
+
+  CurrentElementModel,
 
   MainTemplate
 ) {
@@ -29,6 +34,7 @@ define([
     initialize: function (options) {
       console.log('init Main Controller', options.region);
       this.region = options.region;
+      this.currentElementModel = new CurrentElementModel();
     },
 
     _getLayout: function () {
@@ -43,13 +49,16 @@ define([
     },
 
     show: function () {
-      console.log('show must go on', this.region);
-      this.region.show(this._getLayout());
+      var self = this;
+      self.region.show(self._getLayout());
     },
 
     _showWidgets: function (layout) {
       var navigationController = 
-        new NavigationController({region: layout.navigation});
+        new NavigationController({
+          region: layout.navigation, 
+          currentElementModel: this.currentElementModel
+        });
       navigationController.show();
 //      var headerController = new HeaderController({region: layout.header});
 //      headerController.show();

@@ -11,7 +11,7 @@
   "quotmark": true,
   "sub": true,
   "unused": true,
-  "maxparams": 4,
+  "maxparams": 10,
   "boss": true,
   "eqnull": true,
   "browser": true,
