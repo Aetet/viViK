@@ -1,6 +1,3 @@
-div.bNavigation__m__MenuActive.jsTraverseDiv.jsFirstTraverseDiv
-  a(href="#") Профиль
-div.jsTraverseDiv
-  a(href="#") Стена
-div.jsTraverseDiv
-  a(href="#") Аудио
+div(data-each-item="menuItems")
+  div(data-text="item.name", data-class-b_navigation__m_menu_active="item.activeElement")
+

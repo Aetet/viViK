@@ -179,7 +179,7 @@ module.exports = function(grunt) {
         nonew: true,
         quotmark: true,
         sub: true,
-        maxparams: 4,
+        maxparams: 10,
         boss: true,
         eqnull: true,
         browser: true,

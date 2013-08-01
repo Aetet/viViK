@@ -11,7 +11,7 @@ define([
         obj.off('change:' + keypath, callback);
       },
       read: function(obj, keypath) {
-          return obj instanceof Backbone.Collection ? obj["models"] : obj.get(keypath);
+        return obj instanceof Backbone.Collection ? obj['models'] : obj.get(keypath);
       },
       publish: function(obj, keypath, value) {
         obj.set(keypath, value);

@@ -5,8 +5,6 @@ define([
   'Header/HeaderController',
   'Navigation/NavigationController',
 
-  'Models/CurrentElementModel',
-
   'jade!Content/../../../Templates/Main/MainTemplate'
 ], function (
   app,
@@ -14,8 +12,6 @@ define([
 
   HeaderController,
   NavigationController,
-
-  CurrentElementModel,
 
   MainTemplate
 ) {
@@ -32,9 +28,7 @@ define([
 
   var MainController = Marionette.Controller.extend({
     initialize: function (options) {
-      console.log('init Main Controller', options.region);
       this.region = options.region;
-      this.currentElementModel = new CurrentElementModel();
     },
 
     _getLayout: function () {
@@ -54,14 +48,13 @@ define([
     },
 
     _showWidgets: function (layout) {
+      this._showNavigation(layout.navigation);
+    },
+    _showNavigation: function (region) {
       var navigationController = 
         new NavigationController({
-          region: layout.navigation, 
-          currentElementModel: this.currentElementModel
+          region: region 
         });
-      navigationController.show();
-//      var headerController = new HeaderController({region: layout.header});
-//      headerController.show();
     }
   });
   return MainController;
