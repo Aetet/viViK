@@ -6,4 +6,5 @@ bower_components
 *.log
 public/build/**
 public/node_modules
-**/*.iml
+*.iml
+public/src/js/vendor/
