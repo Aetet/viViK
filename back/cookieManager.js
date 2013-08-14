@@ -2,6 +2,18 @@ var userDAO = require('./db/userDAO')
   , vk = require('./vk/auth')
   , crypto = require('crypto');
 
+var userFetchResults = {
+  success: function (req, userObject) {
+    var user = {
+      userId: userObject.userId,
+      token: userObject.token
+    };
+    req.session.user = user;
+  },
+  error: function (res) {
+    res.clearCookie('key');
+  }
+};
 
 /**
  * Check users session and cookies, authorize user
@@ -16,16 +28,8 @@ exports.checkCookie = function (req, res, next) {
   if (!req.session.user) {
     var key = req.cookies.key;
     if (key) {
-      userDAO.fetchByKey(key, function (err, object) {
-        if (object) {
-          var user = {
-            userId: object.userId,
-            token: object.token
-          };
-          req.session.user = user;
-        } else {
-          res.clearCookie('key');
-        }
+      userDAO.fetchByKey(key, function (err,userObject) {
+        (userObject) ? userFetchResults.success(req, userObject) : userFetchResults.error(res);
         next();
       });
     } else {
@@ -54,7 +58,7 @@ exports.checkCookie = function (req, res, next) {
   } else {
     next();
   }
-}
+};
 
 /**
  * modify object before save in db

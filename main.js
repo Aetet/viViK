@@ -23,10 +23,10 @@ app.use(app.router);
 
 //routing
 app.get('/:id', function (req, res) {
-  console.log(req.session.user);
-  console.log(req.cookies.key);
+  console.log('user',req.session.user);
+  console.log('key', req.cookies.key);
   var id = req.params.id;
-  console.log(id);
+  console.log('id', id);
   vkMethods.getWall(id, function (result) {
     console.log( '%j' ,result);
     res.send(result);
