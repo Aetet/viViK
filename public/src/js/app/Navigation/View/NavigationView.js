@@ -1,18 +1,14 @@
 define([
   'app',
   'Backbone.Marionette',
-  'rivets',
-
-  'jade!Content/../../../Templates/Navigation/NavigationTemplate'
+  'rivets'
 ], function(
   app,
   Marionette,
-  rivets,
-
-  NavigationTemplate
+  rivets
 ) {
   var NavigationView = Marionette.ItemView.extend({
-    template: NavigationTemplate,
+    template: function() {return $('#navigationTemplate').html();},
     
     onShow: function () {
       rivets.bind(this.el, {menuItems: this.collection});

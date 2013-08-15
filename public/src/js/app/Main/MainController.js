@@ -3,22 +3,23 @@ define([
   'Backbone.Marionette',
 
   'Header/HeaderController',
-  'Navigation/NavigationController',
+  'Navigation/NavigationController'
 
-  'jade!Content/../../../Templates/Main/MainTemplate'
 ], function (
   app,
   Marionette,
 
   HeaderController,
-  NavigationController,
+  NavigationController
 
-  MainTemplate
 ) {
   'use strict';
 
   var MainLayout =  Marionette.Layout.extend({
-    template: MainTemplate,
+    initialize: function () {
+      console.log($('#mainTemplate').length, 'length');
+    },
+    template: function(){return $('#mainTemplate').html();},
 
     regions: {
       header: '.jsHeaderRegion',

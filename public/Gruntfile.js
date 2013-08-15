@@ -53,9 +53,9 @@ module.exports = function(grunt) {
       },
       'css.dev': {
         options: {
-          cssIn: '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/build/styles.<%= version %>.css',
+          cssIn: '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/build/styles.css',
           optimizeCss: 'standard.keepLines.keepComments',
-          out: '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/styles.<%= version %>.dev.css'
+          out: '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/styles.dev.css'
         }
       }
     },
@@ -66,7 +66,7 @@ module.exports = function(grunt) {
           paths: ['<%= srcDir %>/<%= assetDir %>/<%= lessDir %>']
         },
         files: {
-          '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/build/styles.<%= version %>.css': '<%= srcDir %>/<%= assetDir %>/<%= lessDir %>/**/*.less'
+          '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/build/styles.css': '<%= srcDir %>/<%= assetDir %>/<%= lessDir %>/**/*.less'
         }
       },
       prod: {
@@ -81,6 +81,12 @@ module.exports = function(grunt) {
     },
 
     clean: {
+      jade: {
+        force: true,
+        src: [
+          '<%= buildDir %>/**/*.jade'
+        ]
+      },
       resources: {
         options: {
           force: true
@@ -137,6 +143,14 @@ module.exports = function(grunt) {
       }
     },
     copy: {
+      jade: {
+        files: [{
+          expand: true,
+          cwd: '<%=srcDir%>',
+          src: '**/*.jade',
+          dest: '<%= buildDir %>'
+        }]
+      },
       resources: {
         files: [{
           expand: true,
@@ -168,7 +182,7 @@ module.exports = function(grunt) {
     preprocess: {
       dev: {
         files: {
-          '<%= buildDir %>/index.html': '<%= buildDir %>/index.html'
+          '<%= buildDir %>/index.jade': '<%= buildDir %>/index.jade'
         },
         options: {
           context: {
@@ -224,9 +238,9 @@ module.exports = function(grunt) {
           pretty: true
         },
         files: [ { 
-          cwd: '<%=srcDir%>',
+          cwd: '<%= buildDir %>',
           src: '**/*.jade',
-          dest: '<%= buildDir %>',
+          dest: '<%= buildDir %>/',
           rename: function(destBase, destPath) {
             return destBase + destPath.replace(/\.jade$/, '.html');
           },
@@ -250,7 +264,7 @@ module.exports = function(grunt) {
 
   // Default task.
   grunt.registerTask('styles:dev', ['copy:resources', 'less:dev', 'preprocess:dev', 'requirejs:css.dev', 'clean:temp']);
-  grunt.registerTask('dev', ['clean', 'jade:dev', 'styles:dev',  'copy:locales', 'copy:scripts', 'notify:build']);
+  grunt.registerTask('dev', ['clean', 'copy:jade', 'styles:dev', 'jade:dev', 'clean:jade', 'copy:locales', 'copy:scripts', 'notify:build']);
   grunt.registerTask('watcher:dev', ['dev', 'watch:dev']);
   grunt.registerTask('default', ['watcher:dev']);
 

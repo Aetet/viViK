@@ -1,0 +1,14 @@
+html(lang="ru")
+  head
+    meta(charset="utf-8")
+    title
+    link(rel="stylesheet", href="assets/css/styles.dev.css")
+    include Templates/Main/MainTemplate
+    include Templates/Navigation/NavigationTemplate
+    
+
+  body
+    div.jsMainRegion.bMainRegion
+    script(src="js/vendor/requirejs/require.js", data-main="js/app/require.config.js")
+    script require(["main"]);
+
