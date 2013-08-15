@@ -1,11 +1,9 @@
 define([
   'app',
-  'backbone',
   'Backbone.Marionette'
 
 ], function (
   app,
-  Backbone,
   Marionette
 ) {
   'use strict';

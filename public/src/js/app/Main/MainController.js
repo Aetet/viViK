@@ -3,13 +3,15 @@ define([
   'Backbone.Marionette',
 
   'Header/HeaderController',
+  'Navigation/NavigationController',
 
-  'jade!./MainTemplate'
+  'jade!Content/../../../Templates/Main/MainTemplate'
 ], function (
   app,
   Marionette,
 
   HeaderController,
+  NavigationController,
 
   MainTemplate
 ) {
@@ -19,13 +21,13 @@ define([
     template: MainTemplate,
 
     regions: {
-      header: '.jsHeaderRegion'
+      header: '.jsHeaderRegion',
+      navigation: '.jsNavigationRegion'
     }
   });
 
   var MainController = Marionette.Controller.extend({
     initialize: function (options) {
-      console.log('init Main Controller', options.region);
       this.region = options.region;
     },
 
@@ -41,13 +43,18 @@ define([
     },
 
     show: function () {
-      console.log('show must go on', this.region);
-      this.region.show(this._getLayout());
+      var self = this;
+      self.region.show(self._getLayout());
     },
 
     _showWidgets: function (layout) {
-//      var headerController = new HeaderController({region: layout.header});
-//      headerController.show();
+      this._showNavigation(layout.navigation);
+    },
+    _showNavigation: function (region) {
+      var navigationController = 
+        new NavigationController({
+          region: region 
+        });
     }
   });
   return MainController;

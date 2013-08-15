@@ -14,6 +14,7 @@ module.exports = function(grunt) {
     buildDir:   'build',
     testDir:    'test',
     srcDir:     'src',
+    localesDir: 'Locales',
     bowerDir:   '<%= jsDir %>/vendor',
     version: '<%= grunt.template.today("yyyymmddhhMM") %>',
     banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
@@ -132,6 +133,15 @@ module.exports = function(grunt) {
         }]
       },
 
+      locales: {
+        files: [{
+          expand: true,
+          cwd: '<%=srcDir%>/<%= localesDir %>',
+          src: '**',
+          dest: '<%= buildDir %>/<%= localesDir %>'
+        }]
+      },
+
       scripts: {
         files: [{
           expand: true,
@@ -169,7 +179,7 @@ module.exports = function(grunt) {
         nonew: true,
         quotmark: true,
         sub: true,
-        maxparams: 4,
+        maxparams: 10,
         boss: true,
         eqnull: true,
         browser: true,
@@ -210,7 +220,7 @@ module.exports = function(grunt) {
 
   // Default task.
   grunt.registerTask('styles:dev', ['copy:resources', 'less:dev', 'concat:dev', 'preprocess:dev', 'requirejs:css.dev', 'clean:temp']);
-  grunt.registerTask('dev', ['clean', 'styles:dev', 'requirejs:dev', 'notify:build']);
+  grunt.registerTask('dev', ['clean', 'styles:dev', 'copy:locales', 'requirejs:dev', 'notify:build']);
   grunt.registerTask('watcher:dev', ['dev', 'watch:dev']);
   grunt.registerTask('default', ['watcher:dev']);
 
