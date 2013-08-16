@@ -8,7 +8,7 @@ define([
   rivets
 ) {
   var NavigationView = Marionette.ItemView.extend({
-    template: function() {return $('#navigationTemplate').html();},
+    template: '#navigationTemplate',
     
     onShow: function () {
       rivets.bind(this.el, {menuItems: this.collection});

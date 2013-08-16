@@ -17,10 +17,8 @@ define([
 
   var MainLayout =  Marionette.Layout.extend({
     initialize: function () {
-      console.log($('#mainTemplate').length, 'length');
     },
-    template: function(){return $('#mainTemplate').html();},
-
+    template: '#mainTemplate',
     regions: {
       header: '.jsHeaderRegion',
       navigation: '.jsNavigationRegion'
