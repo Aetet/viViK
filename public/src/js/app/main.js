@@ -1,16 +1,13 @@
 require([
   'app',
-  'Main/MainController'
-], function (app, MainController) {
+  'AppInitSandbox'
+], function (app, AppInitSandbox) {
   'use strict';
   console.log('historical time');
-  app.addRegions({
-    mainRegion: '.jsMainRegion'
-  });
 
   app.on('initialize:after', function () {
-    var mainController = new MainController({region: app.mainRegion});
-    mainController.show();
+    var appInitSandbox = new AppInitSandbox();
+    console.log(appInitSandbox);
   });
   app.start();
 

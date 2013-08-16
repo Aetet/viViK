@@ -3,6 +3,7 @@ define([
   'Backbone.Marionette',
 
   'Header/HeaderController',
+  'Main/MainEventController',
   'Navigation/NavigationController'
 
 ], function (
@@ -10,6 +11,7 @@ define([
   Marionette,
 
   HeaderController,
+  MainEventController,
   NavigationController
 
 ) {
@@ -28,6 +30,7 @@ define([
   var MainController = Marionette.Controller.extend({
     initialize: function (options) {
       this.region = options.region;
+      this.mainEventSandbox = new MainEventController();
     },
 
     _getLayout: function () {
@@ -52,6 +55,7 @@ define([
     _showNavigation: function (region) {
       var navigationController = 
         new NavigationController({
+          mainEventSandbox: this.mainEventSandbox,
           region: region 
         });
     }
