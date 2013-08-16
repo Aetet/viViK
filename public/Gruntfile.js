@@ -27,6 +27,16 @@ module.exports = function(grunt) {
       dev: {
         options: {
           pragmasOnSave: {
+            excludeJade: true
+          },
+          baseUrl: '<%= buildDir %>/<%= jsDir %>/app',
+          mainConfigFile: '<%= buildDir %>/<%= jsDir %>/app/require.config.js',
+          name: 'main',
+        }
+      },
+      prod: {
+        options: {
+          pragmasOnSave: {
             excludeJade: true,
             compileDebug: true
           },
@@ -43,9 +53,9 @@ module.exports = function(grunt) {
       },
       'css.dev': {
         options: {
-          cssIn: '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/build/styles.<%= version %>.css',
+          cssIn: '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/build/styles.css',
           optimizeCss: 'standard.keepLines.keepComments',
-          out: '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/styles.<%= version %>.dev.css'
+          out: '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/styles.dev.css'
         }
       }
     },
@@ -56,7 +66,7 @@ module.exports = function(grunt) {
           paths: ['<%= srcDir %>/<%= assetDir %>/<%= lessDir %>']
         },
         files: {
-          '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/build/styles.<%= version %>.css': '<%= srcDir %>/<%= assetDir %>/<%= lessDir %>/**/*.less'
+          '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>/build/styles.css': '<%= srcDir %>/<%= assetDir %>/<%= lessDir %>/**/*.less'
         }
       },
       prod: {
@@ -71,13 +81,23 @@ module.exports = function(grunt) {
     },
 
     clean: {
+      jade: {
+        force: true,
+        src: [
+          '<%= buildDir %>/**/*.jade'
+        ]
+      },
       resources: {
         options: {
           force: true
         },
         src: [
           '<%= buildDir %>/<%= bowerDir %>',
-          '<%= buildDir %>/<%= assetDir %>/img'
+          '<%= buildDir %>/<%= assetDir %>/img',
+          '<%= buildDir %>/img',
+          '<%= buildDir %>/Templates',
+          '<%= buildDir %>/**/*.jade',
+          '<%= buildDir %>/**/*.html'
         ]
       },
       scripts: {
@@ -86,8 +106,7 @@ module.exports = function(grunt) {
         },
         src: [
           '<%= buildDir %>/<%= jsDir %>',
-          '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>',
-          'index.html'
+          '<%= buildDir %>/<%= assetDir %>/<%= cssDir %>'
         ]
       },
       temp: {
@@ -124,12 +143,20 @@ module.exports = function(grunt) {
       }
     },
     copy: {
+      jade: {
+        files: [{
+          expand: true,
+          cwd: '<%=srcDir%>',
+          src: '**/*.jade',
+          dest: '<%= buildDir %>'
+        }]
+      },
       resources: {
         files: [{
           expand: true,
           cwd: '<%=srcDir%>/<%= assetDir %>',
           src: 'img/**',
-          dest: '<%= buildDir %>'
+          dest: '<%= buildDir %>/<%=assetDir %>'
         }]
       },
 
@@ -155,7 +182,7 @@ module.exports = function(grunt) {
     preprocess: {
       dev: {
         files: {
-          'index.html': '<%= srcDir %>/index.html'
+          '<%= buildDir %>/index.jade': '<%= buildDir %>/index.jade'
         },
         options: {
           context: {
@@ -205,6 +232,22 @@ module.exports = function(grunt) {
         tasks: ['clean:scripts', 'styles:dev', 'requirejs:dev']
       }
     },
+    jade: {
+      dev: {
+        options: {
+          pretty: true
+        },
+        files: [ { 
+          cwd: '<%= buildDir %>',
+          src: '**/*.jade',
+          dest: '<%= buildDir %>/',
+          rename: function(destBase, destPath) {
+            return destBase + destPath.replace(/\.jade$/, '.html');
+          },
+          expand: true
+        }]
+      }
+    }
   });
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-clean');
@@ -216,11 +259,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-preprocess');
+  grunt.loadNpmTasks('grunt-contrib-jade');
   grunt.loadNpmTasks('grunt-notify');
 
   // Default task.
-  grunt.registerTask('styles:dev', ['copy:resources', 'less:dev', 'concat:dev', 'preprocess:dev', 'requirejs:css.dev', 'clean:temp']);
-  grunt.registerTask('dev', ['clean', 'styles:dev', 'copy:locales', 'requirejs:dev', 'notify:build']);
+  grunt.registerTask('styles:dev', ['copy:resources', 'less:dev', 'preprocess:dev', 'requirejs:css.dev', 'clean:temp']);
+  grunt.registerTask('dev', ['clean', 'copy:jade', 'styles:dev', 'jade:dev', 'clean:jade', 'copy:locales', 'copy:scripts', 'notify:build']);
   grunt.registerTask('watcher:dev', ['dev', 'watch:dev']);
   grunt.registerTask('default', ['watcher:dev']);
 

@@ -1,18 +1,34 @@
 define([
   'app',
   'Backbone.Marionette',
-  'rivets',
-
-  'jade!Content/../../../Templates/Navigation/NavigationTemplate'
+  'rivets'
 ], function(
   app,
   Marionette,
-  rivets,
-
-  NavigationTemplate
+  rivets
 ) {
   var NavigationView = Marionette.ItemView.extend({
-    template: NavigationTemplate,
+    template: '#navigationTemplate',
+    initialize: function (options) {
+      var self = this;
+      self.mainEventSandbox = options.mainEventSandbox;
+
+      self.process();
+    },
+    process: function () {
+      var self = this;
+      self.listenTo(self.mainEventSandbox, {
+        'NavigationController::showNavigationView': function (region) {
+          self.show(region);
+        }
+      });
+
+    },
+    
+    show: function (region) {
+      var renderRegion = region || this.region;
+      renderRegion.show(this);
+    },
     
     onShow: function () {
       rivets.bind(this.el, {menuItems: this.collection});

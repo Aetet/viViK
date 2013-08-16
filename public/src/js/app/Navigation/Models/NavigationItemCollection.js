@@ -13,7 +13,7 @@ define([
   var NavigationItemCollection = 
     Backbone.Collection.extend({
       model: NavigationItemModel,
-      url: '/build/Locales/Navigation/NavigationContentJSON.json'
+      url: '/Locales/Navigation/NavigationContentJSON.json'
     });
 
   return NavigationItemCollection;

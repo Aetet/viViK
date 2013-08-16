@@ -12,6 +12,7 @@ define([
   app.addInitializer(function () {
 
     this.keyCatcher = new KeyCatcher();
+    /*
     Marionette.TemplateCache.prototype.loadTemplate = function (templateId) {
       return templateId;
     };
@@ -19,6 +20,7 @@ define([
     Marionette.TemplateCache.prototype.compileTemplate = function (rawTemplate) {
       return rawTemplate;
     };
+    */
   });
 
 

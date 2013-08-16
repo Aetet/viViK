@@ -3,23 +3,24 @@ define([
   'Backbone.Marionette',
 
   'Header/HeaderController',
-  'Navigation/NavigationController',
+  'Main/MainEventController',
+  'Navigation/NavigationController'
 
-  'jade!Content/../../../Templates/Main/MainTemplate'
 ], function (
   app,
   Marionette,
 
   HeaderController,
-  NavigationController,
+  MainEventController,
+  NavigationController
 
-  MainTemplate
 ) {
   'use strict';
 
   var MainLayout =  Marionette.Layout.extend({
-    template: MainTemplate,
-
+    initialize: function () {
+    },
+    template: '#mainTemplate',
     regions: {
       header: '.jsHeaderRegion',
       navigation: '.jsNavigationRegion'
@@ -29,6 +30,7 @@ define([
   var MainController = Marionette.Controller.extend({
     initialize: function (options) {
       this.region = options.region;
+      this.mainEventSandbox = new MainEventController();
     },
 
     _getLayout: function () {
@@ -53,6 +55,7 @@ define([
     _showNavigation: function (region) {
       var navigationController = 
         new NavigationController({
+          mainEventSandbox: this.mainEventSandbox,
           region: region 
         });
     }
