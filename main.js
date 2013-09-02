@@ -40,7 +40,7 @@ app.use(function (req, res, next) {
 
 //Total error handling
 app.use(function (err, req, res, next) {
-  res.send('app error');
+  res.send(err);
 });
 
 http.createServer(app).listen('8080');

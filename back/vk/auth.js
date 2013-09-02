@@ -1,9 +1,11 @@
 var http = require('http')
   , https = require('https')
-  , url = require('url');
+  , url = require('url')
+  , Deferred = require('../util/deferred');
 
 /**
  * app details
+ * TODO find out scope
  * @type {number}
  */
 var client_id = 3750804
@@ -46,8 +48,9 @@ function redirectToAuthInVK(req, res) {
  * method for get access_token for given user
  * @param req
  * @param res
+ * @returns promise
  */
-function getToken(req, res, callback) {
+function getToken(req, res) {
   var queryParams = {
     client_id: client_id,
     client_secret: client_secret,
@@ -61,19 +64,16 @@ function getToken(req, res, callback) {
     query: queryParams
   };
   var vkUrl = url.format(urlObject);
-  getTokenRequest(vkUrl, function (status, result) {
-    callback(status, result);
-  });
+  return getTokenRequest(vkUrl);
 }
 
 /**
  * request to VK to get access_token
  * @param url
- * @param callback The first parameter will contain the http status code of get request (200 if success),
- *  second parameter - request result (json object)
+ * @returns promise
  */
-function getTokenRequest(url, callback) {
-
+function getTokenRequest(url) {
+  var deferred = new Deferred();
   var rq = https.get(url, function (rs) {
     var result = '';
     rs.on('data', function (chunk) {
@@ -81,27 +81,26 @@ function getTokenRequest(url, callback) {
     });
     rs.on('end', function () {
       var obj = JSON.parse(result);
-      callback(rs.statusCode, obj);
+      if (200 == rs.statusCode) {
+        deferred.resolve(obj);
+      } else {
+        deferred.reject(obj);
+      }
     });
   });
   rq.on('error', function (e) {
-    console.log(e.message);
-    throw e;
+    deferred.reject(e);
   });
+  return deferred.promise;
 }
 
 /**
+ * TODO handle access denied flow
  * VK auth
  * @param req
  * @param res
- * @param callback
  */
-exports.auth = function (req, res, callback) {
-  if ('/auth' === req.path && req.query.code) {
-    console.log('getToken');
-    getToken(req, res , callback);
-  } else {
-    console.log('redirect');
-    redirectToAuthInVK(req, res);
-  }
+exports.auth = function (req, res) {
+  return ('/auth' === req.path && req.query.code) ?
+    getToken(req, res) : redirectToAuthInVK(req, res);
 };

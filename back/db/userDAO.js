@@ -1,30 +1,34 @@
 /*
-fake dao
+ fake dao
  */
 var db = require('./initDB')
-  , collection = db.collection('data');
+  , collection = db.collection('data')
+  , Deferred = require('../util/deferred');
 
 /**
  * fetch by key
  * @param key
- * @param callback(function) - The first parameter will contain the Error object if an error occured,
- *  or null otherwise. While the second parameter will contain the results from the findOne method or null if an error occured.
+ * @returns promise
  */
-exports.fetchByKey = function (key, callback) {
+exports.fetchByKey = function (key) {
+  var deferred = new Deferred();
   collection.findOne({'key': key}, function (err, doc) {
-    callback(err, doc);
+    (doc) ? deferred.resolve(doc) : deferred.reject(err);
   });
+  return deferred.promise;
 };
 
 /**
- * save in db
+ * save in db or rewrite if exists
  * @param object
- * @param callback
+ * @returns promise
  */
-exports.save = function (object, callback) {
-  collection.findAndModify({'key':object.key}, {}, object, {upsert: true}, function (err, doc) {
-    callback(err, doc);
+exports.save = function (object) {
+  var deferred = new Deferred();
+  collection.findAndModify({'key': object.key}, {}, object, {upsert: true}, function (err, doc) {
+    (doc) ? deferred.resolve(doc) : deferred.reject(err);
   });
+  return deferred.promise;
 };
 
 
