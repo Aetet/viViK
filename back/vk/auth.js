@@ -9,7 +9,7 @@ var http = require('http')
  * @type {number}
  */
 var client_id = 3750804
-  , scope = 3
+  , scope = 2067871
   , client_secret = '33gSPoq4u0I3awttClRl';
 
 var redirectBackURL = (function () {

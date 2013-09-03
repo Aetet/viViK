@@ -84,7 +84,7 @@ function saveUserInDB() {
 }
 
 function setKeyCookie(res, object) {
-  res.cookie('key', object.key, {maxAge: object.expire});
+  res.cookie('key', object.key);
 };
 
 function setSessionCookie(req, object) {
@@ -105,7 +105,6 @@ function modifyObject(object) {
   var id = object.user_id + "";
   dbObject.key = crypto.createHash('sha1').update(id).digest('hex');
   dbObject.userId = object.user_id;
-  dbObject.expire = object.expires_in * 1000 - 5000;// ~time of process
   dbObject.token = object.access_token;
   return dbObject;
 }
