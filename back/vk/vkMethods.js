@@ -1,6 +1,6 @@
 var http = require('http');
 var url = require('url');
-var vk = require('./vk');
+var vkCore = require('./vkMethodsCore');
 
 var GET_WALL = 'wall.get?';
 
@@ -29,7 +29,7 @@ vkMethods.getWall = function (id) {
   } else {
     params.domain = id;
   }
-  return vk.request(GET_WALL, params);
+  return vkCore.request(GET_WALL, params);
 };
 
 module.exports = exports = vkMethods;
