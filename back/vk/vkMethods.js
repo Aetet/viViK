@@ -1,6 +1,6 @@
 var http = require('http');
 var url = require('url');
-var VK = require('./vk');
+var vk = require('./vk');
 
 var GET_WALL = 'wall.get?';
 
@@ -12,13 +12,11 @@ function isNumber(n) {
 vkMethods = {};
 
 /**
- *
  * @param req
  * @param res
- * @param callback parameter contains result
+ * @returns promise
  */
-vkMethods.getWall = function (id, callback) {
-
+vkMethods.getWall = function (id) {
   //predefined params, more info http://vk.com/dev/wall.get
   var params = {
     offset: 0,
@@ -31,12 +29,7 @@ vkMethods.getWall = function (id, callback) {
   } else {
     params.domain = id;
   }
-  var vk = new VK();
-  vk.request(GET_WALL, params);
-
-  vk.on(GET_WALL, function (result) {
-    callback(result);
-  });
+  return vk.request(GET_WALL, params);
 };
 
-exports = module.exports = vkMethods;
+module.exports = exports = vkMethods;

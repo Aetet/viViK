@@ -1,39 +1,30 @@
-var http = require('http');
-var events = require('events');
-var qs = require('querystring');
-var util = require('util');
+var http = require('http')
+  , qs = require('querystring')
+  , Deferred = require('../util/deferred');
 
-function VK() {
 
-  var self = this;
+exports.request = function (method, params){
 
-  self.request = function (method, params) {
-    var queryString = qs.stringify(params);
-    var jsonResponse = {};
-    var options = {
-      host: 'api.vk.com',
-      path: '/method/' + method + queryString
-    };
-    var req = http.get(options, function (res) {
-      var result = '';
-      res.on('data', function (chunk) {
-        result += chunk;
-      });
-      res.on('end', function () {
-        jsonResponse = JSON.parse(result);
-        self.emit(method, jsonResponse);
-      });
+  var queryString = qs.stringify(params);
+  var options = {
+    host: 'api.vk.com',
+    path: '/method/' + method + queryString
+  };
+  var deferred = new Deferred();
+  var req = http.get(options, function (res) {
+    var result = '';
+    res.on('data', function (chunk) {
+      result += chunk;
     });
-    req.on('error', function (e) {
-      console.log(e.message);
-      jsonResponse = {error: 'vk api error'};
-      self.emit(method, jsonResponse);
+    res.on('end', function () {
+      var jsonResponse = JSON.parse(result);
+      deferred.resolve(jsonResponse);
     });
-  }
+  });
+  req.on('error', function (e) {
+    deferred.reject(e);
+  });
+  return deferred.promise;
 };
-
-util.inherits(VK, events.EventEmitter);
-module.exports = VK;
-
 
 
