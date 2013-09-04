@@ -2,6 +2,8 @@ var userDAO = require('./db/userDAO')
   , vk = require('./vk/auth')
   , crypto = require('crypto');
 
+var ONE_YEAR_IN_MILLISECONDS = 31536000000;
+
 /**
  * Check users session and cookies, authorize user
  * cookies contains:  key - hash of userId value
@@ -44,6 +46,7 @@ function errorSessionRecovery(req, res) {
 
 function successSessionRecovery(req, res) {
   return function (object) {
+    setKeyCookie(res, object);
     setSessionCookie(req, object);
   };
 };
@@ -84,7 +87,7 @@ function saveUserInDB() {
 }
 
 function setKeyCookie(res, object) {
-  res.cookie('key', object.key);
+  res.cookie('key', object.key, {maxAge: ONE_YEAR_IN_MILLISECONDS});
 };
 
 function setSessionCookie(req, object) {
