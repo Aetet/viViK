@@ -18,7 +18,7 @@ app.use(express.cookieSession({secret: 'greatSecret'}));
 //check users cookie and session, authorize
 app.use(cookieManager.checkCookie);
 //path to static content
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public', 'build')));
 app.use(app.router);
 
 //routing
