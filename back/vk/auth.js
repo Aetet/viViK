@@ -4,13 +4,11 @@ var http = require('http')
   , Deferred = require('../util/deferred');
 
 /**
- * app details
- * TODO find out scope
- * @type {number}
+ * app settings
  */
-var client_id = 3750804
-  , scope = 2067871
-  , client_secret = '33gSPoq4u0I3awttClRl';
+var settings = require('./settings');
+var APP_ACCESS_SCOPE = 2067871;
+
 
 var redirectBackURL = (function () {
   var UrlParams = {
@@ -29,8 +27,8 @@ var redirectBackURL = (function () {
  */
 function redirectToAuthInVK(req, res) {
   var queryParams = {
-    client_id: client_id,
-    scope: scope,
+    client_id: settings.appId,
+    scope: APP_ACCESS_SCOPE,
     redirect_uri: redirectBackURL,
     response_type: 'code'
   };
@@ -52,8 +50,8 @@ function redirectToAuthInVK(req, res) {
  */
 function getToken(req, res) {
   var queryParams = {
-    client_id: client_id,
-    client_secret: client_secret,
+    client_id: settings.appId,
+    client_secret: settings.secretCode,
     redirect_uri: redirectBackURL,
     code: req.query.code
   };

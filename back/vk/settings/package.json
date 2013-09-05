@@ -1,0 +1,5 @@
+{
+  "name": "vk application settings",
+  "main": "settings.json",
+  "description": "contains vk application settings as a app id and secret code."
+}
