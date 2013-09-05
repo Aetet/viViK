@@ -1,0 +1,7 @@
+{
+  "host" : "your host here",
+  "port" : "your port here",
+  "databaseName" : "your database name here",
+  "login": "your login for database here",
+  "password" : "your password for database here"
+}
