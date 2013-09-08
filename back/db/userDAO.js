@@ -1,18 +1,16 @@
-/*
- fake dao
- */
 var db = require('./initDB')
   , collection = db.collection('data')
   , Deferred = require('../util/deferred');
 
+var userDAO = {};
 /**
  * fetch by key
  * @param key
  * @returns promise
  */
-exports.fetchByKey = function (key) {
+userDAO.fetchById = function (key) {
   var deferred = new Deferred();
-  collection.findOne({'key': key}, function (err, doc) {
+  collection.findOne({'_id': key}, function (err, doc) {
     (doc) ? deferred.resolve(doc) : deferred.reject(err);
   });
   return deferred.promise;
@@ -23,15 +21,15 @@ exports.fetchByKey = function (key) {
  * @param object
  * @returns promise
  */
-exports.save = function (object) {
+userDAO.save = function (object) {
   var deferred = new Deferred();
-  collection.findAndModify({'key': object.key}, {}, object, {upsert: true}, function (err, doc) {
+  collection.findAndModify({'_id': object._id}, {}, object, {upsert: true}, function (err, doc) {
     (doc) ? deferred.resolve(doc) : deferred.reject(err);
   });
   return deferred.promise;
 };
 
-
+module.exports = exports = userDAO;
 
 
 

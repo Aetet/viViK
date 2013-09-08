@@ -97,6 +97,8 @@ function getTokenRequest(url) {
  * VK auth
  * @param req
  * @param res
+ * @returns promise or undefined.
+ *    Resolved promise pass in success callback object with user_id and access_token fields.
  */
 exports.auth = function (req, res) {
   return ('/auth' === req.path && req.query.code) ?

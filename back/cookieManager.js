@@ -1,8 +1,9 @@
 var userDAO = require('./db/userDAO')
   , vk = require('./vk/auth')
-  , crypto = require('crypto');
+  , User = require('./model/user');
 
 var ONE_YEAR_IN_MILLISECONDS = 31536000000;
+var NAME_OF_KEY_COOKIE = 'key';
 
 /**
  * Check users session and cookies, authorize user
@@ -21,7 +22,7 @@ exports.checkCookie = function (req, res, next) {
   var key = req.cookies.key;
   if (key) {
     if (!req.session.user) {
-      userDAO.fetchByKey(key).then(
+      userDAO.fetchById(key).then(
           successSessionRecovery(req, res), errorSessionRecovery(req, res)).then(
           nextWrap(next));
     } else {
@@ -40,14 +41,14 @@ function nextWrap(next) {
 
 function errorSessionRecovery(req, res) {
   return function (error) {
-    res.clearCookie('key');
+    res.clearCookie(NAME_OF_KEY_COOKIE);
   };
 };
 
 function successSessionRecovery(req, res) {
-  return function (object) {
-    setKeyCookie(res, object);
-    setSessionCookie(req, object);
+  return function (user) {
+    setKeyCookie(res, user);
+    setSessionCookie(req, user);
   };
 };
 
@@ -60,16 +61,17 @@ function authorizeUserInVK(req, res){
 }
 
 function successAuthorizationFlow(res, req) {
-  return function (object) {
-    setKeyCookie(res, object);
-    setSessionCookie(req, object);
-    res.redirect('/' + object.userId);
+  return function (user) {
+    setKeyCookie(res, user);
+    setSessionCookie(req, user);
+    res.redirect('/' + user.userId);
   };
 };
 
 //TODO redirect to sorry page or smthng
 function errorAuthorizationFlow(res, req) {
   return function (error) {
+    console.log(error);
     res.redirect('http://www.google.com');
   }
 };
@@ -81,33 +83,20 @@ function errorAuthorizationFlow(res, req) {
  */
 function saveUserInDB() {
   return function (object) {
-    var modifiedObject = modifyObject(object);
-    return userDAO.save(modifiedObject);
+    var user = new User(object.user_id, object.access_token);
+    return userDAO.save(user);
   };
 }
-
-function setKeyCookie(res, object) {
-  res.cookie('key', object.key, {maxAge: ONE_YEAR_IN_MILLISECONDS});
-};
-
-function setSessionCookie(req, object) {
-  req.session.user = {
-    userId: object.userId,
-    token: object.token
-  };
-};
-
 
 /**
- * modify object before save in db
- * @param object
- * @returns {{}}
+ * add in cookie user's unique key
+ * @param res
+ * @param user
  */
-function modifyObject(object) {
-  var dbObject = {};
-  var id = object.user_id + "";
-  dbObject.key = crypto.createHash('sha1').update(id).digest('hex');
-  dbObject.userId = object.user_id;
-  dbObject.token = object.access_token;
-  return dbObject;
-}
+function setKeyCookie(res, user) {
+  res.cookie(NAME_OF_KEY_COOKIE, user._id, {maxAge: ONE_YEAR_IN_MILLISECONDS});
+};
+
+function setSessionCookie(req, user) {
+  req.session.user = user;
+};

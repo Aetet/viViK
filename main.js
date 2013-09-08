@@ -11,15 +11,13 @@ var app = express();
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
-app.use(express.methodOverride());
 app.use(express.cookieParser());
 app.use(express.cookieSession({secret: 'greatSecret'}));
-
 //check users cookie and session, authorize
 app.use(cookieManager.checkCookie);
 //path to static content
-app.use(express.static(path.join(__dirname, 'public', 'build')));
 app.use(app.router);
+app.use(express.static(path.join(__dirname, 'public', 'build')));
 
 //routing
 app.get('/:id', function (req, res) {
